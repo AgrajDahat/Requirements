@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+   <head>
+      <title th:utext="${title}"></title>
+   </head>
+    
+   <style>
+      table th, table td {
+         padding: 5px;
+      }
+      .message {
+         color: blue;
+      }
+   </style>
+    
+   <body>
+    
+      <!-- Include _menu.html -->
+      <th:block th:include="/_menu"></th:block>  
+       
+      <h2>Members</h2>
+       
+    
+       
+      <table border="1">
+            <tr>
+               <th>Client Name</th>
+               <th>Designation</th>
+               <th>No of positions</th>
+               <th>Location</th>
+               <th>Job Description</th>
+               <th>Stack</th>
+               <th>Date</th>
+               </tr>
+            <tr th:each ="member : ${members}">
+               <td th:utext="${member.clientName}">...</td>
+               <td th:utext="${member.designation}">...</td>
+               <td th:utext="${member.userId}">...</td>
+              	<td th:utext="${member.location}">...</td>
+              	<td th:utext="${member.date}">...</td>
+               <td th:utext="${member.description}">...</td>
+               <td th:utext="${member.stackCode}">...</td>
+               </tr>
+      </table>
+       
+   </body>
+</html>

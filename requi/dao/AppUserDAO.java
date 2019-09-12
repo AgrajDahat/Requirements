@@ -1,0 +1,79 @@
+package com.xyz.requi.dao;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+ 
+import com.xyz.requi.formbean.AppUserForm;
+import com.xyz.requi.model.AppUser;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Repository;
+ 
+@Repository
+public class AppUserDAO {
+ 
+    // Config in WebSecurityConfig
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+ 
+    private static final Map<Long, AppUser> USERS_MAP = new HashMap<>();
+ 
+   
+ 
+    public Long getMaxUserId() {
+        long max = 0;
+        for (Long id : USERS_MAP.keySet()) {
+            if (id > max) {
+                max = id;
+            }
+        }
+        return max;
+    }
+ 
+    //
+ 
+    public AppUser findAppUserByClientName(String clientName) {
+        Collection<AppUser> appUsers = USERS_MAP.values();
+        for (AppUser u : appUsers) {
+            if (u.getClientName().equals(clientName)) {
+                return u;
+            }
+        }
+        return null;
+    }
+ 
+    //public AppUser findAppUserByEmail(String email) {
+      //  Collection<AppUser> appUsers = USERS_MAP.values();
+        //for (AppUser u : appUsers) {
+          //  if (u.getDescription().equals(email)) {
+            //    return u;
+            //}
+        //}
+        //return null;
+    //}
+ 
+    public List<AppUser> getAppUsers() {
+        List<AppUser> list = new ArrayList<>();
+ 
+        list.addAll(USERS_MAP.values());
+        return list;
+    }
+   public AppUser createAppUser(AppUserForm form) {
+       Long userId = this.getMaxUserId() + 1;
+       // String encrytedPassword = this.passwordEncoder.encode(form.getPassword());
+ 
+       	AppUser user = new AppUser(userId, form.getClientName(), //
+                form.getDesignation(), form.getDate(), form.getLocation(), false, //
+                form.getGender(), form.getDescription(), form.getStackCode() //
+              );
+ 
+        USERS_MAP.put(userId, user);
+        return user;
+   
+ 
+}
+}

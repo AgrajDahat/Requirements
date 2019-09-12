@@ -1,0 +1,97 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+   <head>
+      <title th:utext="${title}"></title>
+      <style>
+         th, td {
+         padding: 5px;
+         }
+         td span  {
+         font-size:90%;
+         font-style: italic;
+         color: red;
+         }
+         .error {
+         color: red;
+         font-style: italic;
+         }
+      </style>
+   </head>
+   <body>
+      <!-- Include _menu.html -->
+      <th:block th:include="/_menu"></th:block>
+       
+      <h2>Requirement</h2>
+       
+      <div th:if="${errorMessage != null}"
+           th:utext="${errorMessage}" class="error">...</div>
+       
+      <form th:action="@{/requirement}" th:object="${appUserForm}" method="POST">
+         <table>
+            <tr>
+               <td>Client Name</td>
+               <td><input type="text" th:field="*{clientName}" /></td>
+               <td>
+                  <span th:if="${#fields.hasErrors('clientName')}" th:errors="*{clientName}">..</span>
+               </td>
+            </tr>
+             <td>No of Position</td>
+               <td><input type="number" th:field="*{userId}" /></td>
+               <td>
+                  <span th:if="${#fields.hasErrors('userId')}" th:errors="*{userId}">..</span>
+               </td>
+          
+            <tr>
+               <td>Description</td>
+               <td><input type="text" th:field="*{description}" /> </td>
+               <td>
+                  <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}">..</span>
+               </td>
+            </tr>
+            <tr>
+               <td>Designation</td>
+               <td><input type="text" th:field="*{designation}" /> </td>
+               <td>
+                  <span th:if="${#fields.hasErrors('designation')}" th:errors="*{designation}">..</span>
+               </td>
+            </tr>
+            <tr>
+               <td>Location</td>
+               <td><input type="text" th:field="*{location}" /> </td>
+               <td>
+                  <span th:if="${#fields.hasErrors('location')}" th:errors="*{location}">..</span>
+               </td>
+            </tr>
+           
+           <tr>
+               <td>Date</td>
+               <td><input type="date" th:field="*{date}" /> </td>
+               <td>
+                  <span th:if="${#fields.hasErrors('date')}" th:errors="*{date}">..</span>
+               </td>
+            </tr>
+            <tr>
+               <td>Select Stack</td>
+               <td>
+                  <select th:field="*{stackCode}">
+                     <option value=""> -- </option>
+                     <option th:each="country : ${countries}"
+                        th:value="${country.stackCode}"
+                        th:utext="${country.countryName}"/>
+                  </select>
+               <td><span th:if="${#fields.hasErrors('stackCode')}" th:errors="*{stackCode}">..</span></td>
+            </tr>
+            <tr>
+               <td>&nbsp;</td>
+               <td>
+                  <input type="submit" value="Add Requirement" />
+                  <input type="reset" value="Reset" />
+                 
+               </td>
+               <td>&nbsp;</td>
+            </tr>
+         </table>
+      </form>
+       
+   </body>
+</html>
